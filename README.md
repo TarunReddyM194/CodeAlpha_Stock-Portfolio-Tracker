@@ -1,1 +1,63 @@
 # CodeAlpha_Stock-Portfolio-Tracker
+import csv
+from datetime import datetime
+
+# Stock names with prices (use uppercase)
+stock_data = {
+    "TCS": 180,
+    "WIPRO": 250,
+    "JSW": 2800,
+    "SHOBHA": 300
+}
+
+portfolio = {}
+total = 0
+
+print("Welcome to the Stock Tracker!")
+print("Available stocks:", ", ".join(stock_data.keys()))
+
+try:
+    num = int(input("How many stocks do you want to add? "))
+except:
+    print("Please enter a valid number.")
+    exit()
+
+for i in range(num):
+    sname = input(f"Enter stock name #{i+1}: ").upper()
+    if sname in stock_data:
+        try:
+            qty = int(input(f"Enter quantity of {sname}: "))
+            portfolio[sname] = qty
+        except:
+            print("Quantity must be a number.")
+    else:
+        print("Stock not found!")
+
+print("\nPortfolio Summary:")
+output = []
+
+for stock, qty in portfolio.items():
+    price = stock_data[stock]
+    value = price * qty
+    print(f"{stock}: {qty} x Rs.{price} = Rs.{value}")
+    total += value
+    output.append([stock, qty, price, value])
+
+print(f"\nTotal Investment = Rs.{total}")
+
+# Save to .txt file
+with open("portfolio_summary.txt", "w", encoding="utf-8") as f:
+    f.write("Stock Portfolio Summary\n")
+    f.write(f"Date: {datetime.now()}\n\n")
+    for item in output:
+        f.write(f"{item[0]}: {item[1]} x Rs.{item[2]} = Rs.{item[3]}\n")
+    f.write(f"\nTotal = Rs.{total}\n")
+
+# Save to .csv file
+with open("portfolio_summary.csv", "w", newline="", encoding="utf-8") as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(["Stock", "Quantity", "Price", "Total"])
+    writer.writerows(output)
+    writer.writerow(["", "", "Total", total])
+
+print("\nData saved to 'portfolio_summary.txt' and 'portfolio_summary.csv'")
