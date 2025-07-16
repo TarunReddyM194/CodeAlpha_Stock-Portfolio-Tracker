@@ -1,0 +1,7 @@
+Stock Portfolio Summary
+Date: 2025-07-16 13:06:03.061708
+
+TCS: 1 x Rs.180 = Rs.180
+WIPRO: 2 x Rs.250 = Rs.500
+
+Total = Rs.680
